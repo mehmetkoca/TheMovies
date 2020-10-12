@@ -14,6 +14,8 @@ private enum Constant {
 
 final class HomeViewController: BaseViewController {
     
+    var viewModel: HomeViewModel!
+    
     private let tableView = UITableView()
 
     override func viewDidLoad() {

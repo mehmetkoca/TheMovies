@@ -15,6 +15,7 @@
 		007598982534CEEB00A1646E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598972534CEEB00A1646E /* BaseViewController.swift */; };
 		0075989E2534D49400A1646E /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075989D2534D49400A1646E /* BaseViewModel.swift */; };
 		007598A22534D4C000A1646E /* StatefulViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598A12534D4C000A1646E /* StatefulViewModel.swift */; };
+		007598A72534D65C00A1646E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598A62534D65C00A1646E /* HomeViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		007598972534CEEB00A1646E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		0075989D2534D49400A1646E /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		007598A12534D4C000A1646E /* StatefulViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatefulViewModel.swift; sourceTree = "<group>"; };
+		007598A62534D65C00A1646E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,13 +63,13 @@
 		0075987C2534CAD700A1646E /* TheMovies */ = {
 			isa = PBXGroup;
 			children = (
+				001202902534E117004CBFF6 /* Alamofire.framework */,
 				0075988B2534CAD800A1646E /* Info.plist */,
 				0075987D2534CAD700A1646E /* AppDelegate.swift */,
-				007598812534CAD700A1646E /* HomeViewController.swift */,
 				007598862534CAD800A1646E /* Assets.xcassets */,
 				007598962534CED200A1646E /* Base */,
 				007598882534CAD800A1646E /* LaunchScreen.storyboard */,
-				001202902534E117004CBFF6 /* Alamofire.framework */,
+				007598A42534D64200A1646E /* Scenes */,
 			);
 			path = TheMovies;
 			sourceTree = "<group>";
@@ -88,6 +90,23 @@
 				007598A12534D4C000A1646E /* StatefulViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		007598A42534D64200A1646E /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				007598A52534D64F00A1646E /* Home */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		007598A52534D64F00A1646E /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				007598812534CAD700A1646E /* HomeViewController.swift */,
+				007598A62534D65C00A1646E /* HomeViewModel.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				007598A22534D4C000A1646E /* StatefulViewModel.swift in Sources */,
+				007598A72534D65C00A1646E /* HomeViewModel.swift in Sources */,
 				007598822534CAD700A1646E /* HomeViewController.swift in Sources */,
 				0075989E2534D49400A1646E /* BaseViewModel.swift in Sources */,
 				007598982534CEEB00A1646E /* BaseViewController.swift in Sources */,
