@@ -44,6 +44,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0038309C2534E49D00B7C925 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				007598972534CEEB00A1646E /* BaseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		007598712534CAD700A1646E = {
 			isa = PBXGroup;
 			children = (
@@ -77,8 +85,8 @@
 		007598962534CED200A1646E /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				0038309C2534E49D00B7C925 /* ViewController */,
 				0075989C2534D48700A1646E /* ViewModel */,
-				007598972534CEEB00A1646E /* BaseViewController.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
