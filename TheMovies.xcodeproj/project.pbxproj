@@ -8,20 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		0075987E2534CAD700A1646E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075987D2534CAD700A1646E /* AppDelegate.swift */; };
-		007598802534CAD700A1646E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075987F2534CAD700A1646E /* SceneDelegate.swift */; };
-		007598822534CAD700A1646E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598812534CAD700A1646E /* ViewController.swift */; };
+		007598822534CAD700A1646E /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598812534CAD700A1646E /* HomeViewController.swift */; };
 		007598872534CAD800A1646E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 007598862534CAD800A1646E /* Assets.xcassets */; };
 		0075988A2534CAD800A1646E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 007598882534CAD800A1646E /* LaunchScreen.storyboard */; };
+		007598982534CEEB00A1646E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598972534CEEB00A1646E /* BaseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0075987A2534CAD700A1646E /* TheMovies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0075987D2534CAD700A1646E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		0075987F2534CAD700A1646E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		007598812534CAD700A1646E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		007598812534CAD700A1646E /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		007598862534CAD800A1646E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		007598892534CAD800A1646E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0075988B2534CAD800A1646E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		007598972534CEEB00A1646E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +54,22 @@
 		0075987C2534CAD700A1646E /* TheMovies */ = {
 			isa = PBXGroup;
 			children = (
-				0075987D2534CAD700A1646E /* AppDelegate.swift */,
-				0075987F2534CAD700A1646E /* SceneDelegate.swift */,
-				007598812534CAD700A1646E /* ViewController.swift */,
-				007598862534CAD800A1646E /* Assets.xcassets */,
-				007598882534CAD800A1646E /* LaunchScreen.storyboard */,
 				0075988B2534CAD800A1646E /* Info.plist */,
+				0075987D2534CAD700A1646E /* AppDelegate.swift */,
+				007598812534CAD700A1646E /* HomeViewController.swift */,
+				007598862534CAD800A1646E /* Assets.xcassets */,
+				007598962534CED200A1646E /* Base */,
+				007598882534CAD800A1646E /* LaunchScreen.storyboard */,
 			);
 			path = TheMovies;
+			sourceTree = "<group>";
+		};
+		007598962534CED200A1646E /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				007598972534CEEB00A1646E /* BaseViewController.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,9 +141,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				007598822534CAD700A1646E /* ViewController.swift in Sources */,
+				007598822534CAD700A1646E /* HomeViewController.swift in Sources */,
+				007598982534CEEB00A1646E /* BaseViewController.swift in Sources */,
 				0075987E2534CAD700A1646E /* AppDelegate.swift in Sources */,
-				007598802534CAD700A1646E /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
