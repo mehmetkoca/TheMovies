@@ -10,7 +10,6 @@
 		0075987E2534CAD700A1646E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075987D2534CAD700A1646E /* AppDelegate.swift */; };
 		007598802534CAD700A1646E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0075987F2534CAD700A1646E /* SceneDelegate.swift */; };
 		007598822534CAD700A1646E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007598812534CAD700A1646E /* ViewController.swift */; };
-		007598852534CAD700A1646E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 007598832534CAD700A1646E /* Main.storyboard */; };
 		007598872534CAD800A1646E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 007598862534CAD800A1646E /* Assets.xcassets */; };
 		0075988A2534CAD800A1646E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 007598882534CAD800A1646E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -20,7 +19,6 @@
 		0075987D2534CAD700A1646E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0075987F2534CAD700A1646E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		007598812534CAD700A1646E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		007598842534CAD700A1646E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		007598862534CAD800A1646E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		007598892534CAD800A1646E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0075988B2534CAD800A1646E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -59,7 +57,6 @@
 				0075987D2534CAD700A1646E /* AppDelegate.swift */,
 				0075987F2534CAD700A1646E /* SceneDelegate.swift */,
 				007598812534CAD700A1646E /* ViewController.swift */,
-				007598832534CAD700A1646E /* Main.storyboard */,
 				007598862534CAD800A1646E /* Assets.xcassets */,
 				007598882534CAD800A1646E /* LaunchScreen.storyboard */,
 				0075988B2534CAD800A1646E /* Info.plist */,
@@ -126,7 +123,6 @@
 			files = (
 				0075988A2534CAD800A1646E /* LaunchScreen.storyboard in Resources */,
 				007598872534CAD800A1646E /* Assets.xcassets in Resources */,
-				007598852534CAD700A1646E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -146,14 +142,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		007598832534CAD700A1646E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				007598842534CAD700A1646E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		007598882534CAD800A1646E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -216,7 +204,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +259,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -289,6 +277,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F4GB6K2J56;
 				INFOPLIST_FILE = TheMovies/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -296,7 +285,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mehmetkoca.TheMovies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -308,6 +297,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F4GB6K2J56;
 				INFOPLIST_FILE = TheMovies/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -315,7 +305,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mehmetkoca.TheMovies;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
