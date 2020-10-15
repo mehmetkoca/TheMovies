@@ -17,7 +17,11 @@ final class HomeViewController: BaseViewController {
     
     var viewModel: HomeViewModel!
     
+    private lazy var searchBar: UISearchBar = UISearchBar()
+    
     private let tableView = UITableView()
+
+    private var isSearchActive = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +44,7 @@ private extension HomeViewController {
     
     func configureViews() {
         title = Constant.title
+        configureSearchBar()
     }
     
     func configureTableView() {
@@ -53,18 +58,49 @@ private extension HomeViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
+    
+    func configureSearchBar() {
+        searchBar.searchBarStyle = UISearchBar.Style.prominent
+        searchBar.placeholder = " Search..."
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        searchBar.delegate = self
+        tableView.tableHeaderView = searchBar
+    }
 }
 
 // MARK: - UITableViewDataSource
 
 extension HomeViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        isSearchActive ? 2 : 1
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.movies?.count ?? 0
+        if isSearchActive {
+            return 5
+        } else {
+            return viewModel.movies?.count ?? 0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if isSearchActive {
+            if section == 1 {
+                return "Movies"
+            } else {
+                return "Artists"
+            }
+        } else {
+            return ""
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell", for: indexPath) as? MovieTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell",
+                                                       for: indexPath) as? MovieTableViewCell else {
             return UITableViewCell()
         }
         if let movie = viewModel.movies?[indexPath.row] {
@@ -87,6 +123,27 @@ extension HomeViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UISearchBarDelegate
+
+extension HomeViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText == "" {
+            isSearchActive = false
+            hideLoading()
+            tableView.reloadData()
+        } else if !isSearchActive {
+            isSearchActive = true
+            showLoading()
+        }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let searchText = searchBar.text else { return }
+        viewModel.search(with: searchText)
+    }
+}
+
 // MARK: - State Handling
 
 private extension HomeViewController {
@@ -100,6 +157,8 @@ private extension HomeViewController {
     
     func applyStateChange(_ change: HomeStateChange) {
         switch change {
+        case .isLoading(let isLoading):
+            isLoading ? showLoading() : hideLoading()
         case .popularMoviesFetched:
             DispatchQueue.main.async {
                 self.tableView.reloadData()

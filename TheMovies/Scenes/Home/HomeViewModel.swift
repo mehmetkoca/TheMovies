@@ -7,6 +7,7 @@
 
 enum HomeStateChange: StateChange {
     
+    case isLoading(_ isLoading: Bool)
     case popularMoviesFetched
 }
 
@@ -31,7 +32,9 @@ final class HomeViewModel: StatefulViewModel<HomeStateChange> {
 extension HomeViewModel {
         
     func fetchPopularMovies() {
+        emit(change: .isLoading(true))
         service.getPopularMovies(mediaType: .movie, timeWindow: .week) { [weak self] result in
+            self?.emit(change: .isLoading(false))
             switch result {
             case .success(let response):
                 self?.movies = response.results
@@ -40,5 +43,10 @@ extension HomeViewModel {
                 break
             }
         }
+    }
+    
+    func search(with text: String) {
+        emit(change: .isLoading(true))
+        // TODO: Will be implemented
     }
 }
