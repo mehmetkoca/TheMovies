@@ -7,10 +7,36 @@
 
 enum HomeStateChange: StateChange {
     
-    // TODO: Will be implemented
+    case popularMoviesFetched
 }
 
 final class HomeViewModel: StatefulViewModel<HomeStateChange> {
     
-    // TODO: Wİll be implemented
+    private let service: MoviesServiceProtocol
+    
+    private(set) var movies: [Movie]? {
+        didSet {
+            emit(change: .popularMoviesFetched)
+        }
+    }
+    
+    init(service: MoviesServiceProtocol) {
+        self.service = service
+    }
+}
+
+// MARK: - Network
+
+extension HomeViewModel {
+        
+    func fetchPopularMovies() {
+        service.getPopularMovies(mediaType: .movie, timeWindow: .week) { [weak self] result in
+            switch result {
+            case .success(let response):
+                self?.movies = response.results
+            case .error:
+                break
+            }
+        }
+    }
 }

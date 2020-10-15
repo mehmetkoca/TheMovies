@@ -17,11 +17,13 @@ final class HomeViewController: BaseViewController {
     var viewModel: HomeViewModel!
     
     private let tableView = UITableView()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        addStateChangeHandler()
         configureViews()
+        viewModel.fetchPopularMovies()
     }
     
     override func loadView() {
@@ -46,5 +48,26 @@ private extension HomeViewController {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    }
+}
+
+// MARK: - State Handling
+
+private extension HomeViewController {
+    
+    func addStateChangeHandler() {
+        DispatchQueue.main.async {
+            self.viewModel.addChangeHandler { [weak self] (change: HomeStateChange) in
+                guard let strongSelf = self else { return }
+                strongSelf.applyStateChange(change)
+            }
+        }
+    }
+    
+    func applyStateChange(_ change: HomeStateChange) {
+        switch change {
+        case .popularMoviesFetched:
+            tableView.reloadData()
+        }
     }
 }
