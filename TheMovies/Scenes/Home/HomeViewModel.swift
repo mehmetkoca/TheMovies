@@ -16,6 +16,7 @@ final class HomeViewModel: StatefulViewModel<HomeStateChange> {
     
     private(set) var movies: [Movie]? {
         didSet {
+            movies?.sort{ $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
             emit(change: .popularMoviesFetched)
         }
     }
