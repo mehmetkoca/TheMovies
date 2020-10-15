@@ -13,6 +13,7 @@ final class Environment {
         
         // TODO: Do not store base url and api key in project
         case baseUrl = "https://api.themoviedb.org/3/"
+        case imageUrl = "https://image.tmdb.org/t/p/w500"
         case apiKey = "49bb1e22aafd31834c4a453adc14c9e6"
     }
     

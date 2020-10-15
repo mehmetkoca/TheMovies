@@ -10,6 +10,8 @@
 		006AF0882538C0B800F483A8 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF0872538C0B800F483A8 /* Environment.swift */; };
 		006AF08D2538C18100F483A8 /* URLQueryItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF08C2538C18100F483A8 /* URLQueryItem+Extension.swift */; };
 		006AF09E2538C71B00F483A8 /* MoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF09D2538C71B00F483A8 /* MoviesService.swift */; };
+		006AF0A52538D5C900F483A8 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF0A42538D5C900F483A8 /* MovieTableViewCell.swift */; };
+		006AF0A92538DFD800F483A8 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF0A82538DFD800F483A8 /* UIImageView+Extension.swift */; };
 		0071FEEF2538BAA8006E321A /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0071FEEE2538BAA8006E321A /* HTTPMethod.swift */; };
 		0071FEF22538BACD006E321A /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0071FEF12538BACD006E321A /* NetworkError.swift */; };
 		0071FEF62538BB6C006E321A /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0071FEF52538BB6C006E321A /* NetworkManager.swift */; };
@@ -32,6 +34,8 @@
 		006AF0872538C0B800F483A8 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		006AF08C2538C18100F483A8 /* URLQueryItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLQueryItem+Extension.swift"; sourceTree = "<group>"; };
 		006AF09D2538C71B00F483A8 /* MoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService.swift; sourceTree = "<group>"; };
+		006AF0A42538D5C900F483A8 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
+		006AF0A82538DFD800F483A8 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		0071FEEE2538BAA8006E321A /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
 		0071FEF12538BACD006E321A /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		0071FEF52538BB6C006E321A /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -106,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				006AF08C2538C18100F483A8 /* URLQueryItem+Extension.swift */,
+				006AF0A82538DFD800F483A8 /* UIImageView+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -116,6 +121,14 @@
 				006AF09D2538C71B00F483A8 /* MoviesService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		006AF0A32538D5BA00F483A8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				006AF0A42538D5C900F483A8 /* MovieTableViewCell.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		0071FEEB2538B989006E321A /* Models */ = {
@@ -214,6 +227,7 @@
 			children = (
 				007598812534CAD700A1646E /* HomeViewController.swift */,
 				007598A62534D65C00A1646E /* HomeViewModel.swift */,
+				006AF0A32538D5BA00F483A8 /* View */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -289,6 +303,7 @@
 			files = (
 				007598A22534D4C000A1646E /* StatefulViewModel.swift in Sources */,
 				0071FEFE2538BC73006E321A /* Result.swift in Sources */,
+				006AF0A52538D5C900F483A8 /* MovieTableViewCell.swift in Sources */,
 				007598A72534D65C00A1646E /* HomeViewModel.swift in Sources */,
 				00AC8DFA2534EBB800E09C5F /* TrendingMovieResponse.swift in Sources */,
 				006AF0882538C0B800F483A8 /* Environment.swift in Sources */,
@@ -302,6 +317,7 @@
 				0071FF022538BCAC006E321A /* NetworkProtocol.swift in Sources */,
 				006AF09E2538C71B00F483A8 /* MoviesService.swift in Sources */,
 				007598982534CEEB00A1646E /* BaseViewController.swift in Sources */,
+				006AF0A92538DFD800F483A8 /* UIImageView+Extension.swift in Sources */,
 				00AC8DFD2534EBED00E09C5F /* Movie.swift in Sources */,
 				0075987E2534CAD700A1646E /* AppDelegate.swift in Sources */,
 			);

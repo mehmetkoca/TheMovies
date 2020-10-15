@@ -35,6 +35,7 @@ extension HomeViewModel {
             case .success(let response):
                 self?.movies = response.results
             case .error:
+                // TODO: Will be implemented
                 break
             }
         }
