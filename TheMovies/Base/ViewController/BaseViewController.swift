@@ -39,17 +39,18 @@ private extension BaseViewController {
 extension BaseViewController {
     
     func showLoading() {
-        DispatchQueue.main.async {
-            self.activityIndicator()
-            self.indicator.startAnimating()
-            self.indicator.backgroundColor = .white
-        }
+        let alert = UIAlertController(title: nil, message: "Loading...", preferredStyle: .alert)
+
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.style = UIActivityIndicatorView.Style.gray
+        loadingIndicator.startAnimating();
+
+        alert.view.addSubview(loadingIndicator)
+        present(alert, animated: true, completion: nil)
     }
     
     func hideLoading() {
-        DispatchQueue.main.async {
-            self.indicator.stopAnimating()
-            self.indicator.hidesWhenStopped = true
-        }
+        dismiss(animated: false, completion: nil)
     }
 }

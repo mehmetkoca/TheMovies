@@ -10,6 +10,7 @@ import Foundation
 enum NetworkServices {
     
     case popularMovies(mediaType: MediaType, timeWindow: TimeWindow)
+    case search(searchType: SearchType, text: String)
 }
 
 extension NetworkServices {
@@ -43,6 +44,16 @@ extension NetworkServices {
             return self.rawValue
         }
     }
+    
+    enum SearchType: String {
+        
+        case movie
+        case person
+        
+        var name: String {
+            return self.rawValue
+        }
+    }
 }
 
 // MARK: - NetworkProtocol
@@ -55,6 +66,8 @@ extension NetworkServices: NetworkProtocol {
         switch self {
         case .popularMovies(let mediaType, let timeWindow):
             return "trending/\(mediaType.name)/\(timeWindow.name)"
+        case .search(let searchType, _):
+            return "search/\(searchType.name)"
         }
     }
     
@@ -62,20 +75,24 @@ extension NetworkServices: NetworkProtocol {
     
     var httpMethod: HTTPMethod {
         switch self {
-        case .popularMovies:
+        case .popularMovies,
+             .search:
             return .get
         }
     }
     
     var headers: HTTPHeaders {
-        switch self {
-        case .popularMovies:
-            return ["Accept": "application/json"]
-        }
+        return ["Accept": "application/json"]
     }
     
     var parameters: Parameters {
-        ["api_key":Environment.shared.configuration(.apiKey)]
+        switch self {
+        case .search(_, let text):
+            return ["api_key":Environment.shared.configuration(.apiKey),
+                    "query": "\(text)"]
+        default:
+            return ["api_key":Environment.shared.configuration(.apiKey)]
+        }
     }
     
     private func getBaseUrlString() -> String {

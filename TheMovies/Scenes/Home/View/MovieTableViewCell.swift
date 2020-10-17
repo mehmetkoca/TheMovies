@@ -67,16 +67,7 @@ extension MovieTableViewCell {
     
     func configure(with presentation: MoviewTableViewCellPresentation) {
         if let posterPath = presentation.posterPath {
-            let posterUrlString = Environment.shared.configuration(.imageUrl)
-            var posterURL = URL(string: posterUrlString)
-            posterURL?.appendPathComponent(posterPath)
-            let queryItems = [URLQueryItem(name: "api_key",
-                                           value: Environment.shared.configuration(.apiKey))]
-            var urlCompenents = URLComponents(string: posterURL?.absoluteString ?? "")
-            urlCompenents?.queryItems = queryItems
-            if let resultPosterURL = urlCompenents?.url {
-                posterImageView.downloaded(from: resultPosterURL)
-            }
+            posterImageView.downloaded(from: posterPath)
         }
         
         if let title = presentation.title {

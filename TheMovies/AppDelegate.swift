@@ -15,7 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         let homeViewController = HomeViewController(nibName: nil, bundle: nil)
-        let homeViewModel = HomeViewModel(service: MoviesService())
+        let homeViewModel = HomeViewModel(moviesService: MoviesService(),
+                                          searchService: SearchService())
         homeViewController.viewModel = homeViewModel
         let navigationController = UINavigationController(rootViewController: homeViewController)
         

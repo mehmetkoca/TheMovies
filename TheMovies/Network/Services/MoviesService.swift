@@ -11,18 +11,18 @@ protocol MoviesServiceProtocol {
     
     func getPopularMovies(mediaType: NetworkServices.MediaType,
                           timeWindow: NetworkServices.TimeWindow,
-                          completion: @escaping (Result<TrendingMovieResponse>) -> Void)
+                          completion: @escaping (Result<MoviesResponse>) -> Void)
 }
 
 final class MoviesService: MoviesServiceProtocol {
-    
+
     private let networkManager = NetworkManager.shared
     
     func getPopularMovies(mediaType: NetworkServices.MediaType,
                           timeWindow: NetworkServices.TimeWindow,
-                          completion: @escaping (Result<TrendingMovieResponse>) -> Void) {
+                          completion: @escaping (Result<MoviesResponse>) -> Void) {
         networkManager.request(target: .popularMovies(mediaType: mediaType, timeWindow: timeWindow),
-                               responseType: TrendingMovieResponse.self,
+                               responseType: MoviesResponse.self,
                                completion: completion)
     }
 }

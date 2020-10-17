@@ -9,8 +9,17 @@ import UIKit
 
 extension UIImageView {
     
-    func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
+    func downloaded(from path: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
         contentMode = mode
+        
+        let posterUrlString = Environment.shared.configuration(.imageUrl)
+        var posterURL = URL(string: posterUrlString)
+        posterURL?.appendPathComponent(path)
+        let queryItems = [URLQueryItem(name: "api_key",
+                                       value: Environment.shared.configuration(.apiKey))]
+        var urlCompenents = URLComponents(string: posterURL?.absoluteString ?? "")
+        urlCompenents?.queryItems = queryItems
+        guard let url = urlCompenents?.url else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard
                 let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
@@ -22,10 +31,5 @@ extension UIImageView {
                 self?.image = image
             }
         }.resume()
-    }
-    
-    func downloaded(from link: String, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
-        guard let url = URL(string: link) else { return }
-        downloaded(from: url, contentMode: mode)
     }
 }
