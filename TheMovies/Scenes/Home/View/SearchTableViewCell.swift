@@ -14,7 +14,13 @@ struct MoviewTableViewCellPresentation {
     let voteAverage: Double?
 }
 
-final class MovieTableViewCell: UITableViewCell {
+struct PersonTableViewCellPresentation {
+    
+    let profilePath: String?
+    let name: String?
+}
+
+final class SearchTableViewCell: UITableViewCell {
     
     private let posterImageView: UIImageView = {
         let imageView = UIImageView()
@@ -63,7 +69,7 @@ final class MovieTableViewCell: UITableViewCell {
 
 // MARK: - Public Methods
 
-extension MovieTableViewCell {
+extension SearchTableViewCell {
     
     func configure(with presentation: MoviewTableViewCellPresentation) {
         if let posterPath = presentation.posterPath {
@@ -78,11 +84,23 @@ extension MovieTableViewCell {
             voteAverageLabel.text = "Vote: \(voteAverage)"
         }
     }
+    
+    func configure(with presentation: PersonTableViewCellPresentation) {
+        if let profilePath = presentation.profilePath {
+            posterImageView.downloaded(from: profilePath)
+        }
+        
+        if let name = presentation.name {
+            titleLabel.text = name
+        }
+        
+        voteAverageLabel.isHidden = true
+    }
 }
 
 // MARK: - Configure Views
 
-private extension MovieTableViewCell {
+private extension SearchTableViewCell {
     
     func configureViews() {
         

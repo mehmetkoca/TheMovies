@@ -65,13 +65,14 @@ extension HomeViewModel {
         }
     }
     
-    func clearSearchData() {
-        searchedData = []
-    }
-    
     func search(with text: String) {
+        clearSearchData()
         searchMovie(with: text)
         searchPerson(with: text)
+    }
+    
+    private func clearSearchData() {
+        searchedData = []
     }
     
     private func searchMovie(with text: String) {

@@ -46,7 +46,7 @@ private extension HomeViewController {
     }
     
     func configureTableView() {
-        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "movieCell")
+        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "searchCell")
         tableView.keyboardDismissMode = .interactive
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -98,8 +98,8 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieCell",
-                                                       for: indexPath) as? MovieTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell",
+                                                       for: indexPath) as? SearchTableViewCell else {
             return UITableViewCell()
         }
         
@@ -114,9 +114,9 @@ extension HomeViewController: UITableViewDataSource {
                 }
             case 1:
                 if let person = viewModel.searchedData[1]?[indexPath.row] as? Person {
-                    let presentation = MoviewTableViewCellPresentation(posterPath: person.profilePath,
-                                                                       title: person.name,
-                                                                       voteAverage: nil)
+                    let presentation = PersonTableViewCellPresentation(
+                        profilePath: person.profilePath, name: person.name
+                    )
                     cell.configure(with: presentation)
                 }
             default:
@@ -150,7 +150,6 @@ extension HomeViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {
-            viewModel.clearSearchData()
             tableView.reloadData()
         }
     }
