@@ -143,39 +143,43 @@ private extension MovieDetailsCell {
     
     func configureContainerView() {
         contentView.addSubview(containerView)
-        containerView.topAnchor.constraint(equalTo: contentView.topAnchor,
-                                           constant: 8.0).isActive = true
-        containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                              constant: -8.0).isActive = true
-        containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                               constant: 8.0).isActive = true
-        containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                constant: -8.0).isActive = true
+        NSLayoutConstraint.activate([
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8.0),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8.0)
+        ])
     }
     
     func configurePosterImageView() {
         posterHolderView.addSubview(posterImageView)
-        posterImageView.leadingAnchor.constraint(equalTo: posterHolderView.leadingAnchor).isActive = true
-        posterImageView.trailingAnchor.constraint(equalTo: posterHolderView.trailingAnchor).isActive = true
-        posterImageView.topAnchor.constraint(equalTo: posterHolderView.topAnchor).isActive = true
-        posterImageView.bottomAnchor.constraint(lessThanOrEqualTo: posterHolderView.bottomAnchor).isActive = true
-        posterImageView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
-        posterImageView.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
+        NSLayoutConstraint.activate([
+            posterImageView.leadingAnchor.constraint(equalTo: posterHolderView.leadingAnchor),
+            posterImageView.trailingAnchor.constraint(equalTo: posterHolderView.trailingAnchor),
+            posterImageView.topAnchor.constraint(equalTo: posterHolderView.topAnchor),
+            posterImageView.bottomAnchor.constraint(lessThanOrEqualTo: posterHolderView.bottomAnchor),
+            posterImageView.widthAnchor.constraint(equalToConstant: 100.0),
+            posterImageView.heightAnchor.constraint(equalToConstant: 150.0)
+        ])
     }
     
     func configureTitleView() {
         titleHolderView.addSubview(titleLabel)
-        titleLabel.leadingAnchor.constraint(equalTo: titleHolderView.leadingAnchor).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: titleHolderView.trailingAnchor).isActive = true
-        titleLabel.topAnchor.constraint(equalTo: titleHolderView.topAnchor).isActive = true
-        titleLabel.bottomAnchor.constraint(equalTo: titleHolderView.bottomAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: titleHolderView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: titleHolderView.trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: titleHolderView.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: titleHolderView.bottomAnchor)
+        ])
     }
     
     func configureSummaryView() {
         summaryHolderView.addSubview(summaryLabel)
-        summaryLabel.leadingAnchor.constraint(equalTo: summaryHolderView.leadingAnchor).isActive = true
-        summaryLabel.trailingAnchor.constraint(equalTo: summaryHolderView.trailingAnchor).isActive = true
-        summaryLabel.bottomAnchor.constraint(equalTo: summaryHolderView.bottomAnchor).isActive = true
-        summaryLabel.topAnchor.constraint(equalTo: summaryHolderView.topAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            summaryLabel.leadingAnchor.constraint(equalTo: summaryHolderView.leadingAnchor),
+            summaryLabel.trailingAnchor.constraint(equalTo: summaryHolderView.trailingAnchor),
+            summaryLabel.bottomAnchor.constraint(equalTo: summaryHolderView.bottomAnchor),
+            summaryLabel.topAnchor.constraint(equalTo: summaryHolderView.topAnchor)
+        ])
     }
 }
