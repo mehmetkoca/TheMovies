@@ -12,6 +12,21 @@ private enum Constant {
     static let title = "TheMovies"
     static let searchPlaholderText = " Search..."
     static let estimatedRowHeight: CGFloat = 200.0
+    
+    enum List: Int {
+        
+        case movies
+        case person
+        
+        var value: String {
+            switch self {
+            case .movies:
+                return "Movies"
+            case .person:
+                return "Person"
+            }
+        }
+    }
 }
 
 final class HomeViewController: BaseViewController {
@@ -90,7 +105,7 @@ extension HomeViewController: UITableViewDataSource {
             case 0:
                 return viewModel.searchedMovies?.count ?? 0
             case 1:
-                return viewModel.searchedPerson?.count ?? 0
+                return viewModel.searchedPeople?.count ?? 0
             default:
                 return 0
             }
@@ -103,10 +118,10 @@ extension HomeViewController: UITableViewDataSource {
         
         if isSearchActive {
             switch section {
-            case 0:
-                return "Movies"
-            case 1:
-                return "People"
+            case Constant.List.movies.rawValue:
+                return Constant.List.movies.value
+            case Constant.List.person.rawValue:
+                return Constant.List.person.value
             default:
                 return nil
             }
@@ -133,7 +148,7 @@ extension HomeViewController: UITableViewDataSource {
                 )
                 cell.configure(with: presentation)
             } else if indexPath.section == 1,
-                      let person = viewModel.searchedPerson?[indexPath.row] {
+                      let person = viewModel.searchedPeople?[indexPath.row] {
                 let presentation = PersonListItemCellPresentation(
                     profilePath: person.profilePath,
                     name: person.name
@@ -168,20 +183,20 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if isSearchActive {
             switch indexPath.section {
-            case 0:
+            case Constant.List.movies.rawValue:
                 if let movieId = viewModel.searchedMovies?[indexPath.row].id {
-                    router.route(to: .movieDetails(movieId: movieId), from: self)
+                    router.route(to: .details(purpose: .movie, id: movieId), from: self)
                 }
-            case 1:
-                if let personId = viewModel.searchedPerson?[indexPath.row].id {
-                    // TODO: Route person detail scene
+            case Constant.List.person.rawValue:
+                if let personId = viewModel.searchedPeople?[indexPath.row].id {
+                    router.route(to: .details(purpose: .person, id: personId), from: self)
                 }
             default:
                 break
             }
         } else {
             if let movieId =  viewModel.movies?[indexPath.row].id {
-                router.route(to: .movieDetails(movieId: movieId), from: self)
+                router.route(to: .details(purpose: .movie, id: movieId), from: self)
             }
         }
     }

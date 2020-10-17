@@ -1,5 +1,5 @@
 //
-//  MovieDetailsViewModel.swift
+//  DetailsViewModel.swift
 //  TheMovies
 //
 //  Created by Mehmet Koca on 17.10.2020.
@@ -10,26 +10,42 @@ enum MovieDetailsChange: StateChange {
     case isLoading(_ isLoading: Bool)
     case movieDetailsFetched
     case movieCreditsFetched
+    case personDetailsFetched
 }
 
-final class MovieDetailsViewModel: StatefulViewModel<MovieDetailsChange> {
+final class DetailsViewModel: StatefulViewModel<MovieDetailsChange> {
     
-    private let moviesService: MoviesServiceProtocol
+    enum Purpose {
+        
+        case movie
+        case person
+    }
     
+    private let moviesService: MoviesServiceProtocol = MoviesService()
     private(set) var movieDetailsResponse: MovieDetailsResponse?
     private(set) var movieCreditsResponse: MovieCreditsResponse?
     
-    init(moviesService: MoviesServiceProtocol, movieId: Int) {
-        self.moviesService = moviesService
+    private let personService: PersonServiceProtocol = PersonService()
+    private(set) var person: Person?
+    
+    private(set) var purpose: Purpose = .movie
+    
+    init(purpose: Purpose, id: Int) {
+        self.purpose = purpose
         super.init()
         
-        getMovieDetails(with: movieId)
+        switch purpose {
+        case .movie:
+            getMovieDetails(with: id)
+        case .person:
+            getPersonDetails(with: id)
+        }
     }
 }
 
 // MARK: - Network
 
-private extension MovieDetailsViewModel {
+private extension DetailsViewModel {
 
     func getMovieDetails(with movieId: Int) {
         emit(change: .isLoading(true))
@@ -52,6 +68,20 @@ private extension MovieDetailsViewModel {
             case .success(let response):
                 self?.movieCreditsResponse = response
                 self?.emit(change: .movieCreditsFetched)
+            case .error:
+                break
+            }
+        }
+    }
+    
+    func getPersonDetails(with personId: Int) {
+        emit(change: .isLoading(true))
+        personService.getPersonDetails(id: personId) { [weak self] result in
+            self?.emit(change: .isLoading(false))
+            switch result {
+            case .success(let response):
+                self?.person = response
+                self?.emit(change: .personDetailsFetched)
             case .error:
                 break
             }

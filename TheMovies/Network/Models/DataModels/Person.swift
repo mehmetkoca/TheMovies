@@ -13,9 +13,10 @@ struct Person: Codable {
     let name: String?
     let popularity: Double?
     let profilePath: String?
+    let biography: String?
     
     private enum CodingKeys: String, CodingKey {
-        case id, name, popularity
+        case id, name, popularity, biography
         case profilePath = "profile_path"
     }
 }

@@ -15,6 +15,13 @@ struct MovieDetailsCellPresentation {
     let rating: Double?
 }
 
+struct PersonDetailsCellPresentation {
+    
+    let posterPath: String?
+    let name: String?
+    let biography: String?
+}
+
 final class DetailsItemCell: UITableViewCell {
     
     private let containerView: UIStackView = {
@@ -120,8 +127,25 @@ extension DetailsItemCell {
         }
         
         if let rating = presentation.rating {
+            ratingLabel.isHidden = false
             ratingLabel.text = "Rating: \(rating)"
         }
+    }
+    
+    func configure(with presentation: PersonDetailsCellPresentation) {
+        if let posterPath = presentation.posterPath {
+            posterImageView.downloaded(from: posterPath)
+        }
+        
+        if let name = presentation.name {
+            titleLabel.text = name
+        }
+        
+        if let biography = presentation.biography {
+            summaryLabel.text = biography
+        }
+        
+        ratingLabel.isHidden = true
     }
 }
 

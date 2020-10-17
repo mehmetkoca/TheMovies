@@ -31,9 +31,9 @@ final class HomeViewModel: StatefulViewModel<HomeStateChange> {
         }
     }
     
-    private(set) var searchedPerson: [Person]? {
+    private(set) var searchedPeople: [Person]? {
         didSet {
-            searchedPerson?.sort { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
+            searchedPeople?.sort { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
         }
     }
     
@@ -101,7 +101,7 @@ extension HomeViewModel {
             switch result {
             case .success(let response):
                 if let persons = response.results {
-                    self?.searchedPerson = persons.count == 0 ? nil : persons
+                    self?.searchedPeople = persons.count == 0 ? nil : persons
                 }
                 self?.emit(change: .searchCompleted)
             case .error:

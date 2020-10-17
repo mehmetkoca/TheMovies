@@ -12,8 +12,7 @@ protocol MoviesServiceProtocol {
     func getPopularMovies(mediaType: NetworkServices.MediaType,
                           timeWindow: NetworkServices.TimeWindow,
                           completion: @escaping (Result<MoviesResponse>) -> Void)
-    func getMovieDetails(id: Int,
-                         completion: @escaping (Result<MovieDetailsResponse>) -> Void)
+    func getMovieDetails(id: Int, completion: @escaping (Result<MovieDetailsResponse>) -> Void)
     func getMovieCast(id: Int, completion: @escaping (Result<MovieCreditsResponse>) -> Void)
 }
 

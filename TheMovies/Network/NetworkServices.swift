@@ -14,6 +14,9 @@ enum NetworkServices {
     case movieDetails(mediaType: MediaType, id: Int)
     case movieCast(mediaType: MediaType, id: Int)
     
+    //Person
+    case personDetails(mediaType: MediaType, id: Int)
+    
     // Search
     case search(searchType: SearchType, text: String)
 }
@@ -34,6 +37,7 @@ extension NetworkServices {
     enum MediaType: String {
         
         case movie
+        case person
         
         var name: String {
             return self.rawValue
@@ -77,19 +81,15 @@ extension NetworkServices: NetworkProtocol {
             return "\(mediaType.name)/\(id)"
         case .movieCast(let mediaType, let id):
             return "\(mediaType.name)/\(id)/credits"
+        case .personDetails(let mediaType, let id):
+            return "\(mediaType.name)/\(id)"
         }
     }
     
     var url: URL { URL(string: self.path, relativeTo: self.baseURL)! }
     
     var httpMethod: HTTPMethod {
-        switch self {
-        case .popularMovies,
-             .search,
-             .movieDetails,
-             .movieCast:
-            return .get
-        }
+        return .get
     }
     
     var headers: HTTPHeaders {

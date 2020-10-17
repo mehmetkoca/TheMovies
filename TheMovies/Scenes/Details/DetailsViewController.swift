@@ -1,5 +1,5 @@
 //
-//  MovieDetailsViewController.swift
+//  DetailsViewController.swift
 //  TheMovies
 //
 //  Created by Mehmet Koca on 17.10.2020.
@@ -9,11 +9,12 @@ import UIKit
 
 private enum Constant {
     
-    static let title = "Movie Details"
+    static let moviesTitle = "Movie Details"
+    static let personTitle = "Person Details"
     static let estimatedRowHeight: CGFloat = 200.0
     static let numberOfSections = 2
     
-    enum MovieDetails: Int {
+    enum Details: Int {
         
         case description
         case cast
@@ -29,9 +30,9 @@ private enum Constant {
     }
 }
 
-final class MovieDetailsViewController: BaseViewController {
+final class DetailsViewController: BaseViewController {
     
-    var viewModel: MovieDetailsViewModel!
+    var viewModel: DetailsViewModel!
     
     private let tableView = UITableView()
     
@@ -51,10 +52,15 @@ final class MovieDetailsViewController: BaseViewController {
 
 // MARK: - Configure Views
 
-private extension MovieDetailsViewController {
+private extension DetailsViewController {
     
     func configureViews() {
-        title = Constant.title
+        switch viewModel.purpose {
+        case .movie:
+            title = Constant.moviesTitle
+        case .person:
+            title = Constant.personTitle
+        }
     }
     
     func configureTableView() {
@@ -78,7 +84,7 @@ private extension MovieDetailsViewController {
 
 // MARK: - UITableViewDelegate
 
-extension MovieDetailsViewController: UITableViewDelegate {
+extension DetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -91,23 +97,23 @@ extension MovieDetailsViewController: UITableViewDelegate {
 
 // MARK: - UITableViewDataSource
 
-extension MovieDetailsViewController: UITableViewDataSource {
+extension DetailsViewController: UITableViewDataSource {
 
     func numberOfSections(in tableView: UITableView) -> Int { Constant.numberOfSections }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == Constant.MovieDetails.description.rawValue {
-            return Constant.MovieDetails.description.value
+        if section == Constant.Details.description.rawValue {
+            return Constant.Details.description.value
         } else {
-            return Constant.MovieDetails.cast.value
+            return Constant.Details.cast.value
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case Constant.MovieDetails.description.rawValue:
+        case Constant.Details.description.rawValue:
             return 1
-        case Constant.MovieDetails.cast.rawValue:
+        case Constant.Details.cast.rawValue:
             return viewModel.movieCreditsResponse?.cast?.count ?? 0
         default:
             return 0
@@ -115,7 +121,7 @@ extension MovieDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == Constant.MovieDetails.description.rawValue {
+        if indexPath.section == Constant.Details.description.rawValue {
             guard let cell = tableView.dequeueReusableCell(
                 withIdentifier: Global.TableViewCell.detailsItemCell.rawValue,
                 for: indexPath
@@ -123,14 +129,24 @@ extension MovieDetailsViewController: UITableViewDataSource {
                 return UITableViewCell()
             }
             
-            if let movieDetails = viewModel.movieDetailsResponse {
-                let movieDetailsPresentation = MovieDetailsCellPresentation(
-                    posterPath: movieDetails.posterPath,
-                    title: movieDetails.title,
-                    summary: movieDetails.summary,
-                    rating: movieDetails.rating
-                )
-                cell.configure(with: movieDetailsPresentation)
+            switch viewModel.purpose {
+            case .movie:
+                if let movieDetails = viewModel.movieDetailsResponse {
+                    let movieDetailsPresentation = MovieDetailsCellPresentation(
+                        posterPath: movieDetails.posterPath,
+                        title: movieDetails.title,
+                        summary: movieDetails.summary,
+                        rating: movieDetails.rating
+                    )
+                    cell.configure(with: movieDetailsPresentation)
+                }
+            case .person:
+                if let person = viewModel.person {
+                    let presentation = PersonDetailsCellPresentation(posterPath: person.profilePath,
+                                                                     name: person.name,
+                                                                     biography: person.biography)
+                    cell.configure(with: presentation)
+                }
             }
             
             return cell
@@ -154,7 +170,7 @@ extension MovieDetailsViewController: UITableViewDataSource {
 
 // MARK: - State Handling
 
-private extension MovieDetailsViewController {
+private extension DetailsViewController {
     
     func addStateChangeHandler() {
         self.viewModel.addChangeHandler { [weak self] (change: MovieDetailsChange) in
@@ -169,7 +185,8 @@ private extension MovieDetailsViewController {
             case .isLoading(let isLoading):
                 isLoading ? self.showLoading() : self.hideLoading()
             case .movieDetailsFetched,
-                 .movieCreditsFetched:
+                 .movieCreditsFetched,
+                 .personDetailsFetched:
                 self.tableView.reloadData()
             }
         }
