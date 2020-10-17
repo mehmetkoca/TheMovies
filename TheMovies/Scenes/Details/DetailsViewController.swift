@@ -11,6 +11,7 @@ private enum Constant {
     
     static let moviesTitle = "Movie Details"
     static let personTitle = "Person Details"
+    static let emptyStateMessage = "Empty State"
     static let estimatedRowHeight: CGFloat = 200.0
     static let numberOfSections = 2
     
@@ -219,6 +220,9 @@ private extension DetailsViewController {
                  .personDetailsFetched,
                  .personCreditsFetched:
                 self.tableView.reloadData()
+            case .movieDetailsFetchedFailure,
+                 .personDetailsFetchedFailure:
+                self.tableView.setEmptyMessage(Constant.emptyStateMessage)
             }
         }
     }

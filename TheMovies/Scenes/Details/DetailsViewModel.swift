@@ -12,6 +12,8 @@ enum MovieDetailsChange: StateChange {
     case movieCreditsFetched
     case personDetailsFetched
     case personCreditsFetched
+    case movieDetailsFetchedFailure
+    case personDetailsFetchedFailure
 }
 
 final class DetailsViewModel: StatefulViewModel<MovieDetailsChange> {
@@ -56,11 +58,12 @@ private extension DetailsViewModel {
             case .success(let response):
                 self?.movieDetailsResponse = response
                 self?.emit(change: .movieDetailsFetched)
+                self?.getMovieCast(with: movieId)
             case .error:
-                break
+                self?.emit(change: .movieDetailsFetchedFailure)
             }
         }
-        getMovieCast(with: movieId)
+        
     }
     
     func getMovieCast(with movieId: Int) {
@@ -84,11 +87,11 @@ private extension DetailsViewModel {
             case .success(let response):
                 self?.person = response
                 self?.emit(change: .personDetailsFetched)
+                self?.getPersonCast(with: personId)
             case .error:
-                break
+                self?.emit(change: .personDetailsFetchedFailure)
             }
         }
-        getPersonCast(with: personId)
     }
     
     func getPersonCast(with personId: Int) {
