@@ -12,6 +12,7 @@ struct MovieListItemCellPresentation {
     let posterPath: String?
     let title: String?
     let voteAverage: Double?
+    let shouldShowDisclosureIndicator: Bool
 }
 
 struct PersonListItemCellPresentation {
@@ -116,6 +117,7 @@ extension ListItemCell {
             informationLabel.text = "Vote: \(voteAverage)"
             informationHolderView.isHidden = false
         }
+        accessoryType = presentation.shouldShowDisclosureIndicator ? .disclosureIndicator : .none
     }
     
     func configure(with presentation: PersonListItemCellPresentation) {
@@ -128,6 +130,7 @@ extension ListItemCell {
         }
         
         informationHolderView.isHidden = true
+        accessoryType = .disclosureIndicator
     }
 }
 
@@ -138,7 +141,6 @@ private extension ListItemCell {
     func configureViews() {
         
         selectionStyle = .none
-        accessoryType = .disclosureIndicator
         
         configureContainerView()
         

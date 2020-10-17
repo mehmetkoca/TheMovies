@@ -11,6 +11,7 @@ enum MovieDetailsChange: StateChange {
     case movieDetailsFetched
     case movieCreditsFetched
     case personDetailsFetched
+    case personCreditsFetched
 }
 
 final class DetailsViewModel: StatefulViewModel<MovieDetailsChange> {
@@ -27,6 +28,7 @@ final class DetailsViewModel: StatefulViewModel<MovieDetailsChange> {
     
     private let personService: PersonServiceProtocol = PersonService()
     private(set) var person: Person?
+    private(set) var personCreditsResponse: PersonCreditsResponse?
     
     private(set) var purpose: Purpose = .movie
     
@@ -82,6 +84,20 @@ private extension DetailsViewModel {
             case .success(let response):
                 self?.person = response
                 self?.emit(change: .personDetailsFetched)
+            case .error:
+                break
+            }
+        }
+        getPersonCast(with: personId)
+    }
+    
+    func getPersonCast(with personId: Int) {
+        personService.getPersonCast(id: personId) { [weak self] result in
+            self?.emit(change: .isLoading(false))
+            switch result {
+            case .success(let response):
+                self?.personCreditsResponse = response
+                self?.emit(change: .personCreditsFetched)
             case .error:
                 break
             }

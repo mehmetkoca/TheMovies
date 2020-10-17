@@ -123,7 +123,13 @@ extension DetailsViewController: UITableViewDataSource {
         case Constant.Details.description.rawValue:
             return 1
         case Constant.Details.cast.rawValue:
-            return viewModel.movieCreditsResponse?.cast?.count ?? 0
+            switch viewModel.purpose {
+            case .movie:
+                return viewModel.movieCreditsResponse?.cast?.count ?? 0
+            case .person:
+                return viewModel.personCreditsResponse?.cast?.count ?? 0
+            }
+            
         default:
             return 0
         }
@@ -166,12 +172,27 @@ extension DetailsViewController: UITableViewDataSource {
             ) as? ListItemCell else {
                 return UITableViewCell()
             }
-            
-            if let movieCast = viewModel.movieCreditsResponse?.cast?[indexPath.row] {
-                let presentation = PersonListItemCellPresentation(profilePath: movieCast.profilePath,
-                                                                  name: movieCast.name)
-                cell.configure(with: presentation)
+            switch viewModel.purpose {
+            case .movie:
+                if let movieCast = viewModel.movieCreditsResponse?.cast?[indexPath.row] {
+                    let presentation = PersonListItemCellPresentation(
+                        profilePath: movieCast.profilePath,
+                        name: movieCast.name
+                    )
+                    cell.configure(with: presentation)
+                }
+            case .person:
+                if let personCast = viewModel.personCreditsResponse?.cast?[indexPath.row] {
+                    let presentation = MovieListItemCellPresentation(
+                        posterPath: personCast.posterPath,
+                        title: personCast.title,
+                        voteAverage: personCast.voteAverage,
+                        shouldShowDisclosureIndicator: false
+                    )
+                    cell.configure(with: presentation)
+                }
             }
+            
             return cell
         }
     }
@@ -195,7 +216,8 @@ private extension DetailsViewController {
                 isLoading ? self.showLoading() : self.hideLoading()
             case .movieDetailsFetched,
                  .movieCreditsFetched,
-                 .personDetailsFetched:
+                 .personDetailsFetched,
+                 .personCreditsFetched:
                 self.tableView.reloadData()
             }
         }

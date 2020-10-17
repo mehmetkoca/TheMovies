@@ -7,10 +7,7 @@
 
 import Foundation
 
-struct PersonDetailsResponse: Codable {
+struct PersonCreditsResponse: Codable {
     
-    let id: Int?
-    let name: String?
-    let biography: String?
-    let profilePath: String?
+    let cast: [Movie]?
 }

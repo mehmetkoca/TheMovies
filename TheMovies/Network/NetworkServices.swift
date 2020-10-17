@@ -16,6 +16,7 @@ enum NetworkServices {
     
     //Person
     case personDetails(mediaType: MediaType, id: Int)
+    case personCast(mediaType: MediaType, id: Int)
     
     // Search
     case search(searchType: SearchType, text: String)
@@ -83,6 +84,8 @@ extension NetworkServices: NetworkProtocol {
             return "\(mediaType.name)/\(id)/credits"
         case .personDetails(let mediaType, let id):
             return "\(mediaType.name)/\(id)"
+        case .personCast(let mediaType, let id):
+            return "\(mediaType.name)/\(id)/movie_credits"
         }
     }
     

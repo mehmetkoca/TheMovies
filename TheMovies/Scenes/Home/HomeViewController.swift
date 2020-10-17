@@ -144,7 +144,8 @@ extension HomeViewController: UITableViewDataSource {
                 let presentation = MovieListItemCellPresentation(
                     posterPath: movie.posterPath,
                     title: movie.title,
-                    voteAverage: movie.voteAverage
+                    voteAverage: movie.voteAverage,
+                    shouldShowDisclosureIndicator: true
                 )
                 cell.configure(with: presentation)
             } else if indexPath.section == 1,
@@ -157,9 +158,12 @@ extension HomeViewController: UITableViewDataSource {
             }
         } else {
             if let movie = viewModel.movies?[indexPath.row] {
-                let presentation = MovieListItemCellPresentation(posterPath: movie.posterPath,
-                                                                 title: movie.title,
-                                                                 voteAverage: movie.voteAverage)
+                let presentation = MovieListItemCellPresentation(
+                    posterPath: movie.posterPath,
+                    title: movie.title,
+                    voteAverage: movie.voteAverage,
+                    shouldShowDisclosureIndicator: true
+                )
                 cell.configure(with: presentation)
             }
         }
