@@ -12,6 +12,7 @@ private enum Constant {
     static let title = "TheMovies"
     static let searchPlaholderText = " Search..."
     static let estimatedRowHeight: CGFloat = 200.0
+    static let emptyStateMessage = "Empty State"
     
     enum List: Int {
         
@@ -67,6 +68,8 @@ private extension HomeViewController {
     func configureTableView() {
         tableView.register(ListItemCell.self,
                            forCellReuseIdentifier: Global.TableViewCell.listItemCell.rawValue)
+        tableView.register(EmptyStateCell.self,
+                           forCellReuseIdentifier: Global.TableViewCell.emptyStateCell.rawValue)
         tableView.keyboardDismissMode = .interactive
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,15 +105,29 @@ extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isSearchActive {
             switch section {
-            case 0:
-                return viewModel.searchedMovies?.count ?? 0
-            case 1:
-                return viewModel.searchedPeople?.count ?? 0
+            case Constant.List.movies.rawValue:
+                if let searchedMovies = viewModel.searchedMovies, searchedMovies.count > 0 {
+                    return searchedMovies.count
+                } else {
+                    return 1
+                }
+            case Constant.List.person.rawValue:
+                if let searchedPeople = viewModel.searchedPeople, searchedPeople.count > 0 {
+                    return searchedPeople.count
+                } else {
+                    return 1
+                }
             default:
                 return 0
             }
         } else {
-            return viewModel.movies?.count ?? 0
+            if let movies = viewModel.movies, movies.count > 0 {
+                tableView.restore()
+                return movies.count
+            } else {
+                tableView.setEmptyMessage(Constant.emptyStateMessage)
+                return 0
+            }
         }
     }
     
@@ -138,23 +155,45 @@ extension HomeViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if isSearchActive{
-            if indexPath.section == 0,
-               let movie = viewModel.searchedMovies?[indexPath.row] {
-                let presentation = MovieListItemCellPresentation(
-                    posterPath: movie.posterPath,
-                    title: movie.title,
-                    voteAverage: movie.voteAverage,
-                    shouldShowDisclosureIndicator: true
-                )
-                cell.configure(with: presentation)
-            } else if indexPath.section == 1,
-                      let person = viewModel.searchedPeople?[indexPath.row] {
-                let presentation = PersonListItemCellPresentation(
-                    profilePath: person.profilePath,
-                    name: person.name
-                )
-                cell.configure(with: presentation)
+        if isSearchActive {
+            if indexPath.section == Constant.List.movies.rawValue {
+                if let movie = viewModel.searchedMovies?[indexPath.row] {
+                    let presentation = MovieListItemCellPresentation(
+                        posterPath: movie.posterPath,
+                        title: movie.title,
+                        voteAverage: movie.voteAverage,
+                        shouldShowDisclosureIndicator: true
+                    )
+                    tableView.separatorStyle = .singleLine
+                    cell.configure(with: presentation)
+                } else {
+                    guard let cell = tableView.dequeueReusableCell(
+                        withIdentifier: Global.TableViewCell.emptyStateCell.rawValue,
+                        for: indexPath
+                    ) as? EmptyStateCell else {
+                        return UITableViewCell()
+                    }
+                    cell.set(text: Constant.emptyStateMessage)
+                    return cell
+                }
+            } else if indexPath.section == Constant.List.person.rawValue {
+                if let person = viewModel.searchedPeople?[indexPath.row] {
+                    let presentation = PersonListItemCellPresentation(
+                        profilePath: person.profilePath,
+                        name: person.name
+                    )
+                    cell.configure(with: presentation)
+                } else {
+                    guard let cell = tableView.dequeueReusableCell(
+                        withIdentifier: Global.TableViewCell.emptyStateCell.rawValue,
+                        for: indexPath
+                    ) as? EmptyStateCell else {
+                        return UITableViewCell()
+                    }
+                    
+                    cell.set(text: Constant.emptyStateMessage)
+                    return cell
+                }
             }
         } else {
             if let movie = viewModel.movies?[indexPath.row] {
