@@ -203,7 +203,7 @@ private extension DetailsItemCell {
         NSLayoutConstraint.activate([
             summaryLabel.leadingAnchor.constraint(equalTo: summaryHolderView.leadingAnchor),
             summaryLabel.trailingAnchor.constraint(equalTo: summaryHolderView.trailingAnchor),
-            summaryLabel.bottomAnchor.constraint(equalTo: summaryHolderView.bottomAnchor),
+            summaryLabel.bottomAnchor.constraint(lessThanOrEqualTo: summaryHolderView.bottomAnchor),
             summaryLabel.topAnchor.constraint(equalTo: summaryHolderView.topAnchor)
         ])
     }
