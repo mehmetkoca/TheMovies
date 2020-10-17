@@ -105,10 +105,7 @@ extension ListItemCell {
     
     func configure(with presentation: MovieListItemCellPresentation) {
         if let posterPath = presentation.posterPath {
-            posterImageView.backgroundColor = .clear
             posterImageView.downloaded(from: posterPath)
-        } else {
-            posterImageView.backgroundColor = .lightGray
         }
         
         if let title = presentation.title {
@@ -123,10 +120,7 @@ extension ListItemCell {
     
     func configure(with presentation: PersonListItemCellPresentation) {
         if let profilePath = presentation.profilePath {
-            posterImageView.backgroundColor = .clear
             posterImageView.downloaded(from: profilePath)
-        } else {
-            posterImageView.backgroundColor = .lightGray
         }
         
         if let name = presentation.name {
