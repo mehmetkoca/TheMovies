@@ -10,6 +10,21 @@ import UIKit
 private enum Constant {
     
     static let title = "Movie Details"
+    
+    enum MovieDetails: Int {
+        
+        case description
+        case cast
+        
+        var value: String {
+            switch self {
+            case .description:
+                return "Description"
+            case .cast:
+                return "Cast"
+            }
+        }
+    }
 }
 
 final class MovieDetailsViewController: BaseViewController {
@@ -79,18 +94,18 @@ extension MovieDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == 0 {
-            return "Description"
+        if section == Constant.MovieDetails.description.rawValue {
+            return Constant.MovieDetails.description.value
         } else {
-            return "Cast"
+            return Constant.MovieDetails.cast.value
         }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
-        case 0:
+        case Constant.MovieDetails.description.rawValue:
             return 1
-        case 1:
+        case Constant.MovieDetails.cast.rawValue:
             return viewModel.movieCreditsResponse?.cast?.count ?? 0
         default:
             return 0
@@ -98,7 +113,7 @@ extension MovieDetailsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == Constant.MovieDetails.description.rawValue {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieDetailsCell",
                                                            for: indexPath) as? MovieDetailsCell else {
                 return UITableViewCell()
