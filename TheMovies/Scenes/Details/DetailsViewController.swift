@@ -33,6 +33,7 @@ private enum Constant {
 final class DetailsViewController: BaseViewController {
     
     var viewModel: DetailsViewModel!
+    var router: DetailsRouter!
     
     private let tableView = UITableView()
     
@@ -92,6 +93,14 @@ extension DetailsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if case DetailsViewModel.Purpose.movie = viewModel.purpose,
+           let castId = viewModel.movieCreditsResponse?.cast?[indexPath.row].id,
+           indexPath.section == Constant.Details.cast.rawValue {
+            router.route(to: .details(purpose: .person, id: castId), from: self)
+        }
     }
 }
 

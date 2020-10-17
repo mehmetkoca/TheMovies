@@ -1,5 +1,5 @@
 //
-//  HomeRouter.swift
+//  DetailsRouter.swift
 //  TheMovies
 //
 //  Created by Mehmet Koca on 17.10.2020.
@@ -7,19 +7,19 @@
 
 import Foundation
 
-enum HomeRoute {
+enum DetailsRoute {
     
     case details(purpose: DetailsViewModel.Purpose, id: Int)
 }
 
-protocol HomeRouter: BaseRouter {
+protocol DetailsRouter: BaseRouter {
     
-    func route(to: HomeRoute, from source: HomeViewController)
+    func route(to: DetailsRoute, from source: DetailsViewController)
 }
 
-final class DefaultHomeRouter: HomeRouter {
-    
-    func route(to: HomeRoute, from source: HomeViewController) {
+final class DefaultDetailsRouter: DetailsRouter {
+
+    func route(to: DetailsRoute, from source: DetailsViewController) {
         switch to {
         case .details(let purpose, let id):
             let viewController = DetailsViewController(nibName: nil, bundle: nil)
