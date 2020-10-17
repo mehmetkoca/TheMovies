@@ -10,7 +10,8 @@ import UIKit
 private enum Constant {
     
     static let title = "TheMovies"
-    static let tableViewHeightForRowAt: CGFloat = 100.0
+    static let searchPlaholderText = " Search..."
+    static let estimatedRowHeight: CGFloat = 200.0
 }
 
 final class HomeViewController: BaseViewController {
@@ -49,7 +50,8 @@ private extension HomeViewController {
     }
     
     func configureTableView() {
-        tableView.register(SearchTableViewCell.self, forCellReuseIdentifier: "searchCell")
+        tableView.register(ListItemCell.self,
+                           forCellReuseIdentifier: Global.TableViewCell.listItemCell.rawValue)
         tableView.keyboardDismissMode = .interactive
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,13 +59,15 @@ private extension HomeViewController {
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.estimatedRowHeight = Constant.estimatedRowHeight
+        tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
         tableView.delegate = self
     }
     
     func configureSearchBar() {
         searchBar.searchBarStyle = UISearchBar.Style.prominent
-        searchBar.placeholder = " Search..."
+        searchBar.placeholder = Constant.searchPlaholderText
         searchBar.sizeToFit()
         searchBar.isTranslucent = false
         searchBar.backgroundImage = UIImage()
@@ -112,15 +116,17 @@ extension HomeViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "searchCell",
-                                                       for: indexPath) as? SearchTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: Global.TableViewCell.listItemCell.rawValue,
+            for: indexPath
+        ) as? ListItemCell else {
             return UITableViewCell()
         }
         
         if isSearchActive{
             if indexPath.section == 0,
                let movie = viewModel.searchedMovies?[indexPath.row] {
-                let presentation = MoviewTableViewCellPresentation(
+                let presentation = MovieListItemCellPresentation(
                     posterPath: movie.posterPath,
                     title: movie.title,
                     voteAverage: movie.voteAverage
@@ -128,7 +134,7 @@ extension HomeViewController: UITableViewDataSource {
                 cell.configure(with: presentation)
             } else if indexPath.section == 1,
                       let person = viewModel.searchedPerson?[indexPath.row] {
-                let presentation = PersonTableViewCellPresentation(
+                let presentation = PersonListItemCellPresentation(
                     profilePath: person.profilePath,
                     name: person.name
                 )
@@ -136,9 +142,9 @@ extension HomeViewController: UITableViewDataSource {
             }
         } else {
             if let movie = viewModel.movies?[indexPath.row] {
-                let presentation = MoviewTableViewCellPresentation(posterPath: movie.posterPath,
-                                                                   title: movie.title,
-                                                                   voteAverage: movie.voteAverage)
+                let presentation = MovieListItemCellPresentation(posterPath: movie.posterPath,
+                                                                 title: movie.title,
+                                                                 voteAverage: movie.voteAverage)
                 cell.configure(with: presentation)
             }
         }
@@ -152,7 +158,11 @@ extension HomeViewController: UITableViewDataSource {
 extension HomeViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constant.tableViewHeightForRowAt
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

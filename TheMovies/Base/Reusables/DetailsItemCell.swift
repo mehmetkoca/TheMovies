@@ -1,5 +1,5 @@
 //
-//  MovieDetailsCell.swift
+//  DetailsItemCell.swift
 //  TheMovies
 //
 //  Created by Mehmet Koca on 17.10.2020.
@@ -15,7 +15,7 @@ struct MovieDetailsCellPresentation {
     let rating: Double?
 }
 
-final class MovieDetailsCell: UITableViewCell {
+final class DetailsItemCell: UITableViewCell {
     
     private let containerView: UIStackView = {
         let stackView = UIStackView()
@@ -102,9 +102,9 @@ final class MovieDetailsCell: UITableViewCell {
     }
 }
 
-// MARK: - Configure Views
+// MARK: - Public Methods
 
-extension MovieDetailsCell {
+extension DetailsItemCell {
 
     func configure(with presentation: MovieDetailsCellPresentation) {
         if let posterPath = presentation.posterPath {
@@ -126,7 +126,8 @@ extension MovieDetailsCell {
 }
 
 // MARK: - Configure Views
-private extension MovieDetailsCell {
+
+private extension DetailsItemCell {
     
     func configureViews() {
         selectionStyle = .none

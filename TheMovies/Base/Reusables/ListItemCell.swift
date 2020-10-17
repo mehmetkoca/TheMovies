@@ -1,5 +1,5 @@
 //
-//  MovieCastCell.swift
+//  MovieTableViewCell.swift
 //  TheMovies
 //
 //  Created by Mehmet Koca on 15.10.2020.
@@ -7,13 +7,20 @@
 
 import UIKit
 
-struct MovieCastCellPresentation {
+struct MovieListItemCellPresentation {
+    
+    let posterPath: String?
+    let title: String?
+    let voteAverage: Double?
+}
+
+struct PersonListItemCellPresentation {
     
     let profilePath: String?
     let name: String?
 }
 
-final class MovieCastCell: UITableViewCell {
+final class ListItemCell: UITableViewCell {
     
     private let posterHolderView: UIView = {
         let view = UIView()
@@ -39,15 +46,40 @@ final class MovieCastCell: UITableViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14.0)
+        label.font = UIFont.boldSystemFont(ofSize: 16.0)
         label.textColor = .black
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
+    private let informationLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 14.0)
+        label.textColor = .blue
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let informationHolderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .clear
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private let informationStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 4.0
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
     private let containerView: UIStackView = {
-       let view = UIStackView()
+        let view = UIStackView()
         view.spacing = 4.0
         view.axis = .horizontal
         view.distribution = .fill
@@ -69,25 +101,45 @@ final class MovieCastCell: UITableViewCell {
 
 // MARK: - Public Methods
 
-extension MovieCastCell {
+extension ListItemCell {
     
-    func configure(with presentation: MovieCastCellPresentation) {
+    func configure(with presentation: MovieListItemCellPresentation) {
+        if let posterPath = presentation.posterPath {
+            posterImageView.backgroundColor = .clear
+            posterImageView.downloaded(from: posterPath)
+        } else {
+            posterImageView.backgroundColor = .lightGray
+        }
+        
+        if let title = presentation.title {
+            titleLabel.text = title
+        }
+        
+        if let voteAverage = presentation.voteAverage {
+            informationLabel.text = "Vote: \(voteAverage)"
+            informationHolderView.isHidden = false
+        }
+    }
+    
+    func configure(with presentation: PersonListItemCellPresentation) {
         if let profilePath = presentation.profilePath {
             posterImageView.backgroundColor = .clear
             posterImageView.downloaded(from: profilePath)
         } else {
-            posterImageView.backgroundColor = .gray
+            posterImageView.backgroundColor = .lightGray
         }
         
         if let name = presentation.name {
             titleLabel.text = name
         }
+        
+        informationHolderView.isHidden = true
     }
 }
 
 // MARK: - Configure Views
 
-private extension MovieCastCell {
+private extension ListItemCell {
     
     func configureViews() {
         
@@ -98,11 +150,12 @@ private extension MovieCastCell {
         
         configurePosterImageView()
         configureTitleHolderView()
+        configureInformationHolderView()
         
         containerView.addArrangedSubview(posterHolderView)
-        containerView.addArrangedSubview(titleHolderView)
+        containerView.addArrangedSubview(informationStackView)
     }
-
+    
     func configurePosterImageView() {
         posterHolderView.addSubview(posterImageView)
         NSLayoutConstraint.activate([
@@ -117,14 +170,23 @@ private extension MovieCastCell {
     
     func configureTitleHolderView() {
         titleHolderView.addSubview(titleLabel)
+        informationStackView.addArrangedSubview(titleHolderView)
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8.0),
-            containerView.leadingAnchor.constraint(equalTo:contentView.leadingAnchor, constant: 8.0),
-            containerView.trailingAnchor.constraint(equalTo:contentView.trailingAnchor, constant:-8.0),
             titleLabel.leadingAnchor.constraint(equalTo:titleHolderView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: titleHolderView.trailingAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: titleHolderView.centerYAnchor)
+            titleLabel.topAnchor.constraint(equalTo: titleHolderView.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: titleHolderView.bottomAnchor)
+        ])
+    }
+    
+    func configureInformationHolderView() {
+        informationHolderView.addSubview(informationLabel)
+        informationStackView.addArrangedSubview(informationHolderView)
+        NSLayoutConstraint.activate([
+            informationLabel.leadingAnchor.constraint(equalTo:informationHolderView.leadingAnchor),
+            informationLabel.trailingAnchor.constraint(equalTo: informationHolderView.trailingAnchor),
+            informationLabel.topAnchor.constraint(equalTo: informationHolderView.topAnchor),
+            informationLabel.bottomAnchor.constraint(equalTo: informationHolderView.bottomAnchor)
         ])
     }
     
@@ -138,3 +200,4 @@ private extension MovieCastCell {
         ])
     }
 }
+

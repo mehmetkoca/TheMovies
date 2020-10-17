@@ -26,15 +26,6 @@ private enum Constant {
                 return "Cast"
             }
         }
-        
-        var cellIdentifier: String {
-            switch self {
-            case .description:
-                return "movieDetailsCell"
-            case .cast:
-                return "movieCastCell"
-            }
-        }
     }
 }
 
@@ -68,10 +59,10 @@ private extension MovieDetailsViewController {
     
     func configureTableView() {
         tableView.separatorStyle = .none
-        tableView.register(MovieDetailsCell.self,
-                           forCellReuseIdentifier: Constant.MovieDetails.description.cellIdentifier)
-        tableView.register(MovieCastCell.self,
-                           forCellReuseIdentifier: Constant.MovieDetails.cast.cellIdentifier)
+        tableView.register(DetailsItemCell.self,
+                           forCellReuseIdentifier: Global.TableViewCell.detailsItemCell.rawValue)
+        tableView.register(ListItemCell.self,
+                           forCellReuseIdentifier: Global.TableViewCell.listItemCell.rawValue)
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -126,9 +117,9 @@ extension MovieDetailsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == Constant.MovieDetails.description.rawValue {
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: Constant.MovieDetails.description.cellIdentifier,
+                withIdentifier: Global.TableViewCell.detailsItemCell.rawValue,
                 for: indexPath
-            ) as? MovieDetailsCell else {
+            ) as? DetailsItemCell else {
                 return UITableViewCell()
             }
             
@@ -145,15 +136,15 @@ extension MovieDetailsViewController: UITableViewDataSource {
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(
-                withIdentifier: Constant.MovieDetails.cast.cellIdentifier,
+                withIdentifier: Global.TableViewCell.listItemCell.rawValue,
                 for: indexPath
-            ) as? MovieCastCell else {
+            ) as? ListItemCell else {
                 return UITableViewCell()
             }
             
             if let movieCast = viewModel.movieCreditsResponse?.cast?[indexPath.row] {
-                let presentation = MovieCastCellPresentation(profilePath: movieCast.profilePath,
-                                                             name: movieCast.name)
+                let presentation = PersonListItemCellPresentation(profilePath: movieCast.profilePath,
+                                                                  name: movieCast.name)
                 cell.configure(with: presentation)
             }
             return cell
