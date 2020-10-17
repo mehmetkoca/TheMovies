@@ -23,6 +23,9 @@ final class DefaultHomeRouter: HomeRouter {
         switch to {
         case .movieDetails(let movieId):
             let viewController = MovieDetailsViewController(nibName: nil, bundle: nil)
+            let viewModel = MovieDetailsViewModel(moviesService: MoviesService(),
+                                                  movieId: movieId)
+            viewController.viewModel = viewModel
             source.navigationController?.pushViewController(viewController, animated: true)
         }
     }
