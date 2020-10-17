@@ -153,6 +153,21 @@ extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Constant.tableViewHeightForRowAt
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.section {
+        case 0:
+            if let movieId = viewModel.searchedMovies?[indexPath.row].id {
+                // TODO: Route movie detail scene
+            }
+        case 1:
+            if let personId = viewModel.searchedPerson?[indexPath.row].id {
+                // TODO: Route person detail scene
+            }
+        default:
+            break
+        }
+    }
 }
 
 // MARK: - UISearchBarDelegate
