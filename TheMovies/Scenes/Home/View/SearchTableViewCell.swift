@@ -82,6 +82,7 @@ extension SearchTableViewCell {
         
         if let voteAverage = presentation.voteAverage {
             voteAverageLabel.text = "Vote: \(voteAverage)"
+            voteAverageLabel.isHidden = false
         }
     }
     
