@@ -19,6 +19,8 @@ final class HomeViewController: BaseViewController {
     
     private lazy var searchBar: UISearchBar = UISearchBar()
     
+    private var isSearchActive = false
+    
     private let tableView = UITableView()
     
     override func viewDidLoad() {
@@ -74,27 +76,38 @@ private extension HomeViewController {
 extension HomeViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        !viewModel.searchedData.isEmpty ? viewModel.searchedData.count : 1
+        isSearchActive ? 2 : 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !viewModel.searchedData.isEmpty {
-            return 5
+        if isSearchActive {
+            switch section {
+            case 0:
+                return viewModel.searchedMovies?.count ?? 0
+            case 1:
+                return viewModel.searchedPerson?.count ?? 0
+            default:
+                return 0
+            }
         } else {
             return viewModel.movies?.count ?? 0
         }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if !viewModel.searchedData.isEmpty {
-            if section == 0 {
+        
+        if isSearchActive {
+            switch section {
+            case 0:
                 return "Movies"
-            } else {
+            case 1:
                 return "People"
+            default:
+                return nil
             }
-        } else {
-            return ""
         }
+        
+        return nil
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -103,24 +116,22 @@ extension HomeViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         
-        if !viewModel.searchedData.isEmpty {
-            switch indexPath.section {
-            case 0:
-                if let movie = viewModel.searchedData[0]?[indexPath.row] as? Movie {
-                    let presentation = MoviewTableViewCellPresentation(posterPath: movie.posterPath,
-                                                                       title: movie.title,
-                                                                       voteAverage: movie.voteAverage)
-                    cell.configure(with: presentation)
-                }
-            case 1:
-                if let person = viewModel.searchedData[1]?[indexPath.row] as? Person {
-                    let presentation = PersonTableViewCellPresentation(
-                        profilePath: person.profilePath, name: person.name
-                    )
-                    cell.configure(with: presentation)
-                }
-            default:
-                break
+        if isSearchActive{
+            if indexPath.section == 0,
+               let movie = viewModel.searchedMovies?[indexPath.row] {
+                let presentation = MoviewTableViewCellPresentation(
+                    posterPath: movie.posterPath,
+                    title: movie.title,
+                    voteAverage: movie.voteAverage
+                )
+                cell.configure(with: presentation)
+            } else if indexPath.section == 1,
+                      let person = viewModel.searchedPerson?[indexPath.row] {
+                let presentation = PersonTableViewCellPresentation(
+                    profilePath: person.profilePath,
+                    name: person.name
+                )
+                cell.configure(with: presentation)
             }
         } else {
             if let movie = viewModel.movies?[indexPath.row] {
@@ -149,13 +160,12 @@ extension HomeViewController: UITableViewDelegate {
 extension HomeViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        if searchText == "" {
-            tableView.reloadData()
-        }
+        viewModel.handleSearchText(with: searchText)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let searchText = searchBar.text else { return }
+        isSearchActive = true
         viewModel.search(with: searchText)
     }
 }
@@ -176,9 +186,11 @@ private extension HomeViewController {
             switch change {
             case .isLoading(let isLoading):
                 isLoading ? self.showLoading() : self.hideLoading()
-            break
             case .popularMoviesFetched,
-                 .searhCompleted:
+                 .searchCompleted:
+                self.tableView.reloadData()
+            case .searchTextCleared:
+                self.isSearchActive = false
                 self.tableView.reloadData()
             }
         }

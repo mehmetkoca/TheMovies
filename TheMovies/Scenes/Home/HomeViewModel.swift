@@ -9,7 +9,8 @@ enum HomeStateChange: StateChange {
     
     case isLoading(_ isLoading: Bool)
     case popularMoviesFetched
-    case searhCompleted
+    case searchCompleted
+    case searchTextCleared
 }
 
 final class HomeViewModel: StatefulViewModel<HomeStateChange> {
@@ -24,26 +25,32 @@ final class HomeViewModel: StatefulViewModel<HomeStateChange> {
         }
     }
     
-    private var searchedMovies: [Movie]? {
+    private(set) var searchedMovies: [Movie]? {
         didSet {
             searchedMovies?.sort { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
-            searchedData.append(searchedMovies)
         }
     }
     
-    private var searchedPerson: [Person]? {
+    private(set) var searchedPerson: [Person]? {
         didSet {
             searchedPerson?.sort { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
-            searchedData.append(searchedPerson)
-            emit(change: .searhCompleted)
         }
     }
-    
-    private(set) var searchedData = [[Any]?]()
     
     init(moviesService: MoviesServiceProtocol, searchService: SearchServiceProtocol) {
         self.moviesService = moviesService
         self.searchService = searchService
+    }
+}
+
+// MARK: - Public Methods
+
+extension HomeViewModel {
+    
+    func handleSearchText(with text: String) {
+        if text == "" {
+            emit(change: .searchTextCleared)
+        }
     }
 }
 
@@ -66,13 +73,8 @@ extension HomeViewModel {
     }
     
     func search(with text: String) {
-        clearSearchData()
         searchMovie(with: text)
         searchPerson(with: text)
-    }
-    
-    private func clearSearchData() {
-        searchedData = []
     }
     
     private func searchMovie(with text: String) {
@@ -81,11 +83,15 @@ extension HomeViewModel {
             self?.emit(change: .isLoading(false))
             switch result {
             case .success(let response):
-                self?.searchedMovies = response.results
+                if let movies = response.results {
+                    self?.searchedMovies = movies.count == 0 ? nil : movies
+                }
+                self?.emit(change: .searchCompleted)
             case .error:
                 break
             }
         }
+        
     }
     
     private func searchPerson(with text: String) {
@@ -94,7 +100,10 @@ extension HomeViewModel {
             self?.emit(change: .isLoading(false))
             switch result {
             case .success(let response):
-                self?.searchedPerson = response.results
+                if let persons = response.results {
+                    self?.searchedPerson = persons.count == 0 ? nil : persons
+                }
+                self?.emit(change: .searchCompleted)
             case .error:
                 break
             }
