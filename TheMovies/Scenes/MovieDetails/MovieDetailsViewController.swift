@@ -11,6 +11,7 @@ private enum Constant {
     
     static let title = "Movie Details"
     static let estimatedRowHeight: CGFloat = 200.0
+    static let numberOfSections = 2
     
     enum MovieDetails: Int {
         
@@ -101,9 +102,7 @@ extension MovieDetailsViewController: UITableViewDelegate {
 
 extension MovieDetailsViewController: UITableViewDataSource {
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        2
-    }
+    func numberOfSections(in tableView: UITableView) -> Int { Constant.numberOfSections }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == Constant.MovieDetails.description.rawValue {
