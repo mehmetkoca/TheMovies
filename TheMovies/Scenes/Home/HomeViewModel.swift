@@ -15,8 +15,8 @@ enum HomeStateChange: StateChange {
 
 final class HomeViewModel: StatefulViewModel<HomeStateChange> {
     
-    private let moviesService: MoviesServiceProtocol
-    private let searchService: SearchServiceProtocol
+    private let moviesService: MoviesServiceProtocol = MoviesService()
+    private let searchService: SearchServiceProtocol = SearchService()
     
     private(set) var movies: [Movie]? {
         didSet {
@@ -35,11 +35,6 @@ final class HomeViewModel: StatefulViewModel<HomeStateChange> {
         didSet {
             searchedPeople?.sort { $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
         }
-    }
-    
-    init(moviesService: MoviesServiceProtocol, searchService: SearchServiceProtocol) {
-        self.moviesService = moviesService
-        self.searchService = searchService
     }
 }
 
