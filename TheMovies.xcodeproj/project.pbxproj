@@ -8,7 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0007C20E253ABFAD006B6906 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0007C20D253ABFAD006B6906 /* UITableView+Extension.swift */; };
-		0007C212253AC175006B6906 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0007C211253AC175006B6906 /* Collection+Extension.swift */; };
+		0007C21D253ADD79006B6906 /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0007C21C253ADD79006B6906 /* MovieDetailsViewController.swift */; };
+		0007C220253AE613006B6906 /* HomeRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0007C21F253AE613006B6906 /* HomeRouter.swift */; };
+		0007C224253AE64E006B6906 /* BaseRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0007C223253AE64E006B6906 /* BaseRouter.swift */; };
 		006AF0882538C0B800F483A8 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF0872538C0B800F483A8 /* Environment.swift */; };
 		006AF08D2538C18100F483A8 /* URLQueryItem+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF08C2538C18100F483A8 /* URLQueryItem+Extension.swift */; };
 		006AF09E2538C71B00F483A8 /* MoviesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006AF09D2538C71B00F483A8 /* MoviesService.swift */; };
@@ -37,6 +39,9 @@
 
 /* Begin PBXFileReference section */
 		0007C20D253ABFAD006B6906 /* UITableView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
+		0007C21C253ADD79006B6906 /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
+		0007C21F253AE613006B6906 /* HomeRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeRouter.swift; sourceTree = "<group>"; };
+		0007C223253AE64E006B6906 /* BaseRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRouter.swift; sourceTree = "<group>"; };
 		006AF0872538C0B800F483A8 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		006AF08C2538C18100F483A8 /* URLQueryItem+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLQueryItem+Extension.swift"; sourceTree = "<group>"; };
 		006AF09D2538C71B00F483A8 /* MoviesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesService.swift; sourceTree = "<group>"; };
@@ -76,6 +81,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0007C21B253ADD68006B6906 /* MovieDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0007C21C253ADD79006B6906 /* MovieDetailsViewController.swift */,
+			);
+			path = MovieDetails;
+			sourceTree = "<group>";
+		};
+		0007C222253AE643006B6906 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				0007C223253AE64E006B6906 /* BaseRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		0038309C2534E49D00B7C925 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +225,7 @@
 		007598962534CED200A1646E /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				0007C222253AE643006B6906 /* Router */,
 				0038309C2534E49D00B7C925 /* ViewController */,
 				0075989C2534D48700A1646E /* ViewModel */,
 			);
@@ -223,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				007598A52534D64F00A1646E /* Home */,
+				0007C21B253ADD68006B6906 /* MovieDetails */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -230,6 +253,7 @@
 		007598A52534D64F00A1646E /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				0007C21F253AE613006B6906 /* HomeRouter.swift */,
 				007598812534CAD700A1646E /* HomeViewController.swift */,
 				007598A62534D65C00A1646E /* HomeViewModel.swift */,
 				006AF0A32538D5BA00F483A8 /* View */,
@@ -313,12 +337,15 @@
 				00AC8DFA2534EBB800E09C5F /* MoviesResponse.swift in Sources */,
 				006AF0882538C0B800F483A8 /* Environment.swift in Sources */,
 				006AF08D2538C18100F483A8 /* URLQueryItem+Extension.swift in Sources */,
+				0007C224253AE64E006B6906 /* BaseRouter.swift in Sources */,
 				007598822534CAD700A1646E /* HomeViewController.swift in Sources */,
+				0007C21D253ADD79006B6906 /* MovieDetailsViewController.swift in Sources */,
 				0071FEF62538BB6C006E321A /* NetworkManager.swift in Sources */,
 				0071FEF22538BACD006E321A /* NetworkError.swift in Sources */,
 				0071FEFB2538BC5C006E321A /* NetworkServices.swift in Sources */,
 				0075989E2534D49400A1646E /* BaseViewModel.swift in Sources */,
 				0071FEEF2538BAA8006E321A /* HTTPMethod.swift in Sources */,
+				0007C220253AE613006B6906 /* HomeRouter.swift in Sources */,
 				0071FF022538BCAC006E321A /* NetworkProtocol.swift in Sources */,
 				006AF09E2538C71B00F483A8 /* MoviesService.swift in Sources */,
 				007598982534CEEB00A1646E /* BaseViewController.swift in Sources */,

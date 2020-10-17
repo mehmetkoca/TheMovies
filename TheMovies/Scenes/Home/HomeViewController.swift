@@ -16,6 +16,7 @@ private enum Constant {
 final class HomeViewController: BaseViewController {
     
     var viewModel: HomeViewModel!
+    var router: HomeRouter!
     
     private lazy var searchBar: UISearchBar = UISearchBar()
     
@@ -158,7 +159,7 @@ extension HomeViewController: UITableViewDelegate {
         switch indexPath.section {
         case 0:
             if let movieId = viewModel.searchedMovies?[indexPath.row].id {
-                // TODO: Route movie detail scene
+                router.route(to: .movieDetails(movieId: movieId), from: self)
             }
         case 1:
             if let personId = viewModel.searchedPerson?[indexPath.row].id {

@@ -18,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let homeViewModel = HomeViewModel(moviesService: MoviesService(),
                                           searchService: SearchService())
         homeViewController.viewModel = homeViewModel
+        let homeRouter = DefaultHomeRouter()
+        homeViewController.router = homeRouter
         let navigationController = UINavigationController(rootViewController: homeViewController)
         
         window = UIWindow(frame: UIScreen.main.bounds)
