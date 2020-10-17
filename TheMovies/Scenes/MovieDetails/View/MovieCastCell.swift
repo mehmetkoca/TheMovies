@@ -73,6 +73,7 @@ extension MovieCastCell {
     
     func configure(with presentation: MovieCastCellPresentation) {
         if let profilePath = presentation.profilePath {
+            posterImageView.backgroundColor = .clear
             posterImageView.downloaded(from: profilePath)
         } else {
             posterImageView.backgroundColor = .gray
