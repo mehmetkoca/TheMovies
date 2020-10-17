@@ -19,7 +19,7 @@ final class MovieDetailsCell: UITableViewCell {
     
     private let containerView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 16.0
+        stackView.spacing = 8.0
         stackView.axis = .horizontal
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +78,7 @@ final class MovieDetailsCell: UITableViewCell {
     private let ratingLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.textColor = .black
+        label.textColor = .blue
         label.font = UIFont.boldSystemFont(ofSize: 12.0)
         return label
     }()
@@ -146,18 +146,19 @@ private extension MovieDetailsCell {
         containerView.topAnchor.constraint(equalTo: contentView.topAnchor,
                                            constant: 8.0).isActive = true
         containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
-                                              constant: 8.0).isActive = true
+                                              constant: -8.0).isActive = true
         containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                                constant: 8.0).isActive = true
         containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                constant: 8.0).isActive = true
+                                                constant: -8.0).isActive = true
     }
     
     func configurePosterImageView() {
         posterHolderView.addSubview(posterImageView)
         posterImageView.leadingAnchor.constraint(equalTo: posterHolderView.leadingAnchor).isActive = true
         posterImageView.trailingAnchor.constraint(equalTo: posterHolderView.trailingAnchor).isActive = true
-        posterImageView.centerYAnchor.constraint(equalTo: posterHolderView.centerYAnchor).isActive = true
+        posterImageView.topAnchor.constraint(equalTo: posterHolderView.topAnchor).isActive = true
+        posterImageView.bottomAnchor.constraint(lessThanOrEqualTo: posterHolderView.bottomAnchor).isActive = true
         posterImageView.widthAnchor.constraint(equalToConstant: 100.0).isActive = true
         posterImageView.heightAnchor.constraint(equalToConstant: 150.0).isActive = true
     }

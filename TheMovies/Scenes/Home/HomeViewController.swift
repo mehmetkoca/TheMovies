@@ -156,17 +156,23 @@ extension HomeViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.section {
-        case 0:
-            if let movieId = viewModel.searchedMovies?[indexPath.row].id {
+        if isSearchActive {
+            switch indexPath.section {
+            case 0:
+                if let movieId = viewModel.searchedMovies?[indexPath.row].id {
+                    router.route(to: .movieDetails(movieId: movieId), from: self)
+                }
+            case 1:
+                if let personId = viewModel.searchedPerson?[indexPath.row].id {
+                    // TODO: Route person detail scene
+                }
+            default:
+                break
+            }
+        } else {
+            if let movieId =  viewModel.movies?[indexPath.row].id {
                 router.route(to: .movieDetails(movieId: movieId), from: self)
             }
-        case 1:
-            if let personId = viewModel.searchedPerson?[indexPath.row].id {
-                // TODO: Route person detail scene
-            }
-        default:
-            break
         }
     }
 }

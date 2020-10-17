@@ -43,42 +43,91 @@ private extension MovieDetailsViewController {
     func configureTableView() {
         tableView.separatorStyle = .none
         tableView.register(MovieDetailsCell.self, forCellReuseIdentifier: "movieDetailsCell")
+        tableView.register(MovieCastCell.self, forCellReuseIdentifier: "movieCastCell")
         view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        tableView.estimatedRowHeight = 200
+        tableView.estimatedRowHeight = 600
         tableView.rowHeight = UITableView.automaticDimension
         tableView.dataSource = self
+        tableView.delegate = self
     }
 }
+
+// MARK: - UITableViewDelegate
+
+extension MovieDetailsViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+}
+
 // MARK: - UITableViewDataSource
 
 extension MovieDetailsViewController: UITableViewDataSource {
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        2
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Description"
+        } else {
+            return "Cast"
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return viewModel.movieCreditsResponse?.cast?.count ?? 0
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieDetailsCell",
-                                                       for: indexPath) as? MovieDetailsCell else {
-            return UITableViewCell()
+        if indexPath.section == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieDetailsCell",
+                                                           for: indexPath) as? MovieDetailsCell else {
+                return UITableViewCell()
+            }
+            
+            if let movieDetails = viewModel.movieDetailsResponse {
+                let movieDetailsPresentation = MovieDetailsCellPresentation(
+                    posterPath: movieDetails.posterPath,
+                    title: movieDetails.title,
+                    summary: movieDetails.summary,
+                    rating: movieDetails.rating
+                )
+                cell.configure(with: movieDetailsPresentation)
+            }
+            
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "movieCastCell",
+                                                           for: indexPath) as? MovieCastCell else {
+                return UITableViewCell()
+            }
+            
+            if let movieCast = viewModel.movieCreditsResponse?.cast?[indexPath.row] {
+                let presentation = MovieCastCellPresentation(profilePath: movieCast.profilePath,
+                                                             name: movieCast.name)
+                cell.configure(with: presentation)
+            }
+            return cell
         }
-        
-        if let movieDetails = viewModel.movieDetailsResponse {
-            let movieDetailsPresentation = MovieDetailsCellPresentation(
-                posterPath: movieDetails.posterPath,
-                title: movieDetails.title,
-                summary: movieDetails.summary,
-                rating: movieDetails.rating
-            )
-            cell.configure(with: movieDetailsPresentation)
-        }
-        
-        return cell
     }
 }
 
@@ -98,7 +147,8 @@ private extension MovieDetailsViewController {
             switch change {
             case .isLoading(let isLoading):
                 isLoading ? self.showLoading() : self.hideLoading()
-            case .movieDetailsFetched:
+            case .movieDetailsFetched,
+                 .movieCreditsFetched:
                 self.tableView.reloadData()
             }
         }

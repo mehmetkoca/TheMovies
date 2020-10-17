@@ -12,6 +12,7 @@ enum NetworkServices {
     //Movie
     case popularMovies(mediaType: MediaType, timeWindow: TimeWindow)
     case movieDetails(mediaType: MediaType, id: Int)
+    case movieCast(mediaType: MediaType, id: Int)
     
     // Search
     case search(searchType: SearchType, text: String)
@@ -74,6 +75,8 @@ extension NetworkServices: NetworkProtocol {
             return "search/\(searchType.name)"
         case .movieDetails(let mediaType, let id):
             return "\(mediaType.name)/\(id)"
+        case .movieCast(let mediaType, let id):
+            return "\(mediaType.name)/\(id)/credits"
         }
     }
     
@@ -83,7 +86,8 @@ extension NetworkServices: NetworkProtocol {
         switch self {
         case .popularMovies,
              .search,
-             .movieDetails:
+             .movieDetails,
+             .movieCast:
             return .get
         }
     }
