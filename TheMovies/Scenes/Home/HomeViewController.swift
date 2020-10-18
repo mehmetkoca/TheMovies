@@ -276,7 +276,8 @@ private extension HomeViewController {
             case .isLoading(let isLoading):
                 isLoading ? self.showLoading() : self.hideLoading()
             case .popularMoviesFetched,
-                 .searchCompleted:
+                 .searchMovieCompleted,
+                 .searchPersonCompleted:
                 self.tableView.reloadData()
             case .searchTextCleared:
                 self.isSearchActive = false

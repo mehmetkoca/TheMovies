@@ -10,7 +10,8 @@ enum HomeStateChange: StateChange {
     case isLoading(_ isLoading: Bool)
     case popularMoviesFetched
     case popularMoviesFailed
-    case searchCompleted
+    case searchMovieCompleted(isSuccess: Bool)
+    case searchPersonCompleted(isSuccess: Bool)
     case searchTextCleared
 }
 
@@ -81,9 +82,9 @@ extension HomeViewModel {
                 if let movies = response.results {
                     self?.searchedMovies = movies.count == 0 ? nil : movies
                 }
-                self?.emit(change: .searchCompleted)
+                self?.emit(change: .searchMovieCompleted(isSuccess: true))
             case .error:
-                break
+                self?.emit(change: .searchMovieCompleted(isSuccess: false))
             }
         }
         
@@ -98,9 +99,9 @@ extension HomeViewModel {
                 if let persons = response.results {
                     self?.searchedPeople = persons.count == 0 ? nil : persons
                 }
-                self?.emit(change: .searchCompleted)
+                self?.emit(change: .searchPersonCompleted(isSuccess: true))
             case .error:
-                break
+                self?.emit(change: .searchPersonCompleted(isSuccess: false))
             }
         }
     }
