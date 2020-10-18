@@ -125,7 +125,6 @@ extension HomeViewController: UITableViewDataSource {
                 tableView.restore()
                 return movies.count
             } else {
-                tableView.setEmptyMessage(Constant.emptyStateMessage)
                 return 0
             }
         }
@@ -282,6 +281,8 @@ private extension HomeViewController {
             case .searchTextCleared:
                 self.isSearchActive = false
                 self.tableView.reloadData()
+            case .popularMoviesFailed:
+                self.tableView.setEmptyMessage(Constant.emptyStateMessage)
             }
         }
     }

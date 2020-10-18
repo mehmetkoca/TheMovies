@@ -9,6 +9,7 @@ enum HomeStateChange: StateChange {
     
     case isLoading(_ isLoading: Bool)
     case popularMoviesFetched
+    case popularMoviesFailed
     case searchCompleted
     case searchTextCleared
 }
@@ -21,7 +22,6 @@ final class HomeViewModel: StatefulViewModel<HomeStateChange> {
     private(set) var movies: [Movie]? {
         didSet {
             movies?.sort{ $0.popularity ?? 0.0 > $1.popularity ?? 0.0 }
-            emit(change: .popularMoviesFetched)
         }
     }
     
@@ -60,8 +60,9 @@ extension HomeViewModel {
             switch result {
             case .success(let response):
                 self?.movies = response.results
+                self?.emit(change: .popularMoviesFetched)
             case .error:
-                break
+                self?.emit(change: .popularMoviesFailed)
             }
         }
     }
