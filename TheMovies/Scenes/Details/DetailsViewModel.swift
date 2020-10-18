@@ -9,11 +9,11 @@ enum MovieDetailsChange: StateChange {
     
     case isLoading(_ isLoading: Bool)
     case movieDetailsFetched
-    case movieCreditsFetched
-    case personDetailsFetched
-    case personCreditsFetched
     case movieDetailsFetchedFailure
+    case movieCreditsFetched(isSuccess: Bool)
+    case personDetailsFetched
     case personDetailsFetchedFailure
+    case personCreditsFetched(isSuccess: Bool)
 }
 
 final class DetailsViewModel: StatefulViewModel<MovieDetailsChange> {
@@ -72,9 +72,9 @@ private extension DetailsViewModel {
             switch result {
             case .success(let response):
                 self?.movieCreditsResponse = response
-                self?.emit(change: .movieCreditsFetched)
+                self?.emit(change: .movieCreditsFetched(isSuccess: true))
             case .error:
-                break
+                self?.emit(change: .movieCreditsFetched(isSuccess: false))
             }
         }
     }
@@ -100,9 +100,9 @@ private extension DetailsViewModel {
             switch result {
             case .success(let response):
                 self?.personCreditsResponse = response
-                self?.emit(change: .personCreditsFetched)
+                self?.emit(change: .personCreditsFetched(isSuccess: true))
             case .error:
-                break
+                self?.emit(change: .personCreditsFetched(isSuccess: false))
             }
         }
     }
